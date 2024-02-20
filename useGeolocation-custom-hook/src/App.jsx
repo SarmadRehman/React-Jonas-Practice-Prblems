@@ -1,13 +1,10 @@
 import { useState } from "react";
 
-function useGeolocation() {}
-
-export default function App() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [countClicks, setCountClicks] = useState(0);
+function useGeolocation() {
   const [position, setPosition] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const [countClicks, setCountClicks] = useState(0);
   const { lat, lng } = position;
 
   function getPosition() {
@@ -30,7 +27,14 @@ export default function App() {
         setIsLoading(false);
       }
     );
+    const [lat, lng] = position;
   }
+  return { error, isLoading, lat, lng, getPosition, countClicks };
+}
+
+export default function App() {
+  const { error, isLoading, lat, lng, getPosition, countClicks } =
+    useGeolocation();
 
   return (
     <div>
